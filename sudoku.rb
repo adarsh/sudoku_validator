@@ -1,7 +1,7 @@
 class Sudoku
   N = 3
   INDEX_N = N - 1
-  SIZE = N*N
+  SIZE = N * N
 
   MATRIX =
     [
