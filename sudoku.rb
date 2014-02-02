@@ -1,5 +1,3 @@
-require 'set'
-
 class Sudoku
   N = 3
   INDEX_N = N - 1
@@ -23,63 +21,45 @@ class Sudoku
   end
 
   def run
-    # %w(rows columns submatrices).map { |element| validate_array(element) }
-    validate_all_rows
-    validate_all_columns
-    validate_all_submatrices
+    rows.map { |row| validate_array(row) }
+    columns.map { |column| validate_array(column) }
+    submatrices.map { |submatrix| validate_array(submatrix) }
     puts @valid
   end
 
   private
 
-  def validate_all_rows
-    rows.each do |row|
-      validate_array(row)
-    end
-  end
-
-  def validate_all_columns
-    columns.each do |column|
-      validate_array(column)
-    end
-  end
-
-  def validate_all_submatrices
-    submatrices.each do |submatrix|
-      validate_array(submatrix)
-    end
-  end
-
   def rows
     MATRIX
-  end
-
-  def submatrices
-    (0..INDEX_N).inject([]) do |column_collector, column_index|
-      column_collector << (0..INDEX_N).inject([]) do |row_collector, row_index|
-        row_range = (row_index * N)..(row_index * N + N - 1)
-        column_range  = (column_index * N)..(column_index * N + N - 1)
-        row_collector << sub_array(MATRIX, row_range, column_range)
-      end
-    end.flatten(1)
-  end
-
-  def sub_array(matrix, rows, columns)
-    matrix[rows].map { |row| row[columns] }.flatten
-  end
-
-  def validate_array(array)
-    if array.sort != available_digits.to_a
-      @valid = false
-    end
   end
 
   def columns
     rows.transpose
   end
 
+  def submatrices
+    (0..INDEX_N).inject([]) do |column_collector, column_index|
+      column_collector <<
+        (0..INDEX_N).inject([]) do |row_collector, row_index|
+          row_range = (row_index * N)..(row_index * N + INDEX_N)
+          column_range  = (column_index * N)..(column_index * N + INDEX_N)
+          row_collector << sub_array(MATRIX, row_range, column_range)
+        end
+    end.flatten(1)
+  end
+
+  def sub_array(matrix, row_range, column_range)
+    matrix[row_range].map { |row| row[column_range] }.flatten
+  end
+
+  def validate_array(array)
+    if array.sort != available_digits
+      @valid = false
+    end
+  end
+
   def available_digits
-    1..SIZE
+    (1..SIZE).to_a
   end
 end
 
