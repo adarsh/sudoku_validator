@@ -21,9 +21,10 @@ class Sudoku
   end
 
   def run
-    rows.map { |row| validate_array(row) }
-    columns.map { |column| validate_array(column) }
-    submatrices.map { |submatrix| validate_array(submatrix) }
+    [rows, columns, submatrices].each do |element|
+      element.map { |array| validate_array(array) }
+    end
+
     puts @valid
   end
 
