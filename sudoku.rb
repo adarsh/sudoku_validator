@@ -1,4 +1,4 @@
-class Sudoku
+class SudokuValidator
   N = 3
   INDEX_N = N - 1
   SIZE = N * N
@@ -20,7 +20,7 @@ class Sudoku
     @valid = true
   end
 
-  def run
+  def validate
     elements_to_validate.map { |element| validate_arrays(element) }
     puts @valid
   end
@@ -69,4 +69,4 @@ class Sudoku
   end
 end
 
-Sudoku.new.run
+SudokuValidator.new.validate
