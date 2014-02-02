@@ -28,8 +28,16 @@ class Sudoku
   private
 
   def validate_elements(*elements)
-    elements.each do |element|
-      element.map { |array| validate_array(array) }
+    elements.map { |element| validate_arrays(element) }
+  end
+
+  def validate_arrays(arrays)
+    arrays.map { |array| validate_array(array) }
+  end
+
+  def validate_array(array)
+    if array.sort != available_digits
+      @valid = false
     end
   end
 
@@ -54,12 +62,6 @@ class Sudoku
 
   def sub_array(matrix, row_range, column_range)
     matrix[row_range].map { |row| row[column_range] }.flatten
-  end
-
-  def validate_array(array)
-    if array.sort != available_digits
-      @valid = false
-    end
   end
 
   def available_digits
