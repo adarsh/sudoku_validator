@@ -21,14 +21,14 @@ class Sudoku
   end
 
   def run
-    validate_elements(rows, columns, submatrices)
+    validate_elements
     puts @valid
   end
 
   private
 
-  def validate_elements(*elements)
-    elements.map { |element| validate_arrays(element) }
+  def validate_elements
+    [rows, columns, submatrices].map { |element| validate_arrays(element) }
   end
 
   def validate_arrays(arrays)
