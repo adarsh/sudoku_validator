@@ -21,14 +21,17 @@ class Sudoku
   end
 
   def run
-    [rows, columns, submatrices].each do |element|
-      element.map { |array| validate_array(array) }
-    end
-
+    validate_elements(rows, columns, submatrices)
     puts @valid
   end
 
   private
+
+  def validate_elements(*elements)
+    elements.each do |element|
+      element.map { |array| validate_array(array) }
+    end
+  end
 
   def rows
     MATRIX
