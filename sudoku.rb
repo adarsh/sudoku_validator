@@ -28,7 +28,11 @@ class Sudoku
   private
 
   def validate_elements
-    [rows, columns, submatrices].map { |element| validate_arrays(element) }
+    elements_to_validate.map { |element| validate_arrays(element) }
+  end
+
+  def elements_to_validate
+    [rows, columns, submatrices]
   end
 
   def validate_arrays(arrays)
