@@ -45,13 +45,13 @@ class Sudoku
         (0..INDEX_N).inject([]) do |row_collector, row_index|
           row_range = (row_index * N)..(row_index * N + INDEX_N)
           column_range  = (column_index * N)..(column_index * N + INDEX_N)
-          row_collector << sub_array(MATRIX, row_range, column_range)
+          row_collector << sub_array(row_range, column_range)
         end
     end.flatten(1)
   end
 
-  def sub_array(matrix, row_range, column_range)
-    matrix[row_range].map { |row| row[column_range] }.flatten
+  def sub_array(row_range, column_range)
+    MATRIX[row_range].map { |row| row[column_range] }.flatten
   end
 
   def validate_arrays(arrays)
