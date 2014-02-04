@@ -31,14 +31,14 @@ class SudokuValidator
     (0..INDEX_N).inject([]) do |column_collector, column_index|
       column_collector <<
         (0..INDEX_N).inject([]) do |row_collector, row_index|
-          row_range = (row_index * N)..(row_index * N + INDEX_N)
-          column_range  = (column_index * N)..(column_index * N + INDEX_N)
-          row_collector << sub_array(row_range, column_range)
+          row_collector << sub_array(row_index, column_index)
         end
     end.flatten(1)
   end
 
-  def sub_array(row_range, column_range)
+  def sub_array(row_index, column_index)
+    row_range = (row_index * N)..(row_index * N + INDEX_N)
+    column_range  = (column_index * N)..(column_index * N + INDEX_N)
     @matrix[row_range].map { |row| row[column_range] }.flatten
   end
 
